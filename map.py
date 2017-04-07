@@ -2,11 +2,9 @@
 import io
 import sys
 
-#input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='ascii')
-
 #The specific location being tracked
-#TRACKED_LOCATION = "Vancouver"
-TRACKED_LOCATION = None
+TRACKED_LOCATION = "Winnipeg"
+#TRACKED_LOCATION = None
 
 for line in sys.stdin.buffer:
 	# A bit of a hack
@@ -25,7 +23,7 @@ for line in sys.stdin.buffer:
 		continue
 	#end if
 	
-	year = column_order[2]
+	year = column_order[2].split('-')[0]
 	stat = column_order[7]
 	
 	print("{} {} {}".format(location, year,stat))
