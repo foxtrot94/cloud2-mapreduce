@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import io
 import sys
+import time
+import datetime
 
 #The specific location being tracked
 TRACKED_LOCATION = "Winnipeg"
 #TRACKED_LOCATION = None
-print("It's happenning!!!",file=sys.stderr)
+
+start = time.time()
+print("{}: Started Mapping Process".format(str(datetime.datetime.now())),file=sys.stderr)
+
 for line in sys.stdin.buffer:
 	# A bit of a hack
 	clean_line = str(line)[2:].rstrip().lstrip()
@@ -28,3 +33,7 @@ for line in sys.stdin.buffer:
 	
 	print("{} {} {}".format(location, year,stat))
 #end for
+
+elapsed = time.time() - start
+print("{}: Mapping Process Ended".format(str(datetime.datetime.now())),file=sys.stderr)
+print("{}: Total time spent in Map {}".format(str(datetime.datetime.now()), elapsed),file=sys.stderr)

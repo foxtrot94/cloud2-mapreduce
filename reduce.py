@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import io
 import sys
+import time
 import bisect
+import datetime
 
 # Data structure for holding the stats
 class Stat():
@@ -65,6 +67,10 @@ class Stat():
 current_location = None
 current_year = None
 stats = Stat()
+
+start = time.time()
+print("{}: Started Mapping Process".format(str(datetime.datetime.now())),file=sys.stderr)
+
 for line in sys.stdin.buffer:
 	# A bit of a hack
 	clean_line = line.decode().rstrip().lstrip()
@@ -87,3 +93,7 @@ for line in sys.stdin.buffer:
 #Print final results
 stat_string = str(stats)
 print("{} ({})\t{}".format(current_location,current_year,stat_string))
+
+elapsed = time.time() - start
+print("{}: Mapping Process Ended".format(str(datetime.datetime.now())),file=sys.stderr)
+print("{}: Total time spent in Map {}".format(str(datetime.datetime.now()), elapsed),file=sys.stderr)
