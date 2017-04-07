@@ -11,21 +11,37 @@ class Stat():
 		self.Median = 0
 		self.StdDeviation = 0
 		self.n = 0
+		#inner vars for Standard Deviation
+		self._variance = 0
+		self._std_mean = 0
+		self._std_n = 0
+		#inner vars for Median
+		
+	#end init
 		
 	def __get_new_median(self,num):
 		pass #TODO:implement
 	
 	def __get_new_deviation(self,num):
-		pass #TODO: implement
+		"""This streaming algorithm was based on https://gist.github.com/alexalemi/2151722"""		
+		self._std_n += 1
+		newM = self._std_mean + (num - self._std_mean)*1./self._std_n
+		newS = self._variance + (num - self._std_mean)*(num - newM)
+		self._std_mean, self._variance = newM, newS
+		
+		if self._std_n < 2:
+			return 0
+		
+		return (self._variance/(self._std_n-1))**(1/2)
+	#end __get
 	
 	def update(self, num):
 		self.Min = min(self.Min,num)
 		self.Max = max(self.Max,num)
 		
-		self.Average = ( (self.n * self.Average) + num ) / (self.n +1)
-		
 		self.Median = self.__get_new_median(num)
 		self.StdDeviation = self.__get_new_deviation(num)
+		self.Average = ( (self.n * self.Average) + num ) / (self.n +1)
 		self.n+=1
 	#end update
 	
@@ -56,5 +72,5 @@ for line in sys.stdin.buffer:
 #end for
 
 #Print final results
-stat_string = str(stats).replace('{','').replace('}','')
+stat_string = str(stats)
 print("{} ({})\t{}".format(current_location,current_year,stat_string))
