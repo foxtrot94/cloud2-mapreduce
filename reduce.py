@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import io
 import sys
+import bisect
 
 # Data structure for holding the stats
 class Stat():
@@ -16,11 +17,20 @@ class Stat():
 		self._std_mean = 0
 		self._std_n = 0
 		#inner vars for Median
-		
+		self._median_list = []
 	#end init
 		
 	def __get_new_median(self,num):
-		pass #TODO:implement
+		bisect.insort(self._median_list,num)
+		
+		list_size = len(self._median_list)
+		idx = (list_size)//2
+		
+		if list_size%2 == 0 and list_size > 0:
+			return (self._median_list[idx]+self._median_list[idx-1])/2
+		else:
+			return self._median_list[idx]
+	#end get
 	
 	def __get_new_deviation(self,num):
 		"""This streaming algorithm was based on https://gist.github.com/alexalemi/2151722"""		
@@ -49,6 +59,9 @@ class Stat():
 		return "Min: {} | Max: {} | Average: {} | Median: {} | Std Dev: {}".format(self.Min,self.Max,self.Average,self.Median,self.StdDeviation)
 #end class
 
+#########################
+# Actual reducer logic
+#########################
 current_location = None
 current_year = None
 stats = Stat()
