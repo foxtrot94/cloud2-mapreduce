@@ -69,7 +69,7 @@ current_year = None
 stats = Stat()
 
 start = time.time()
-print("{}: Started Mapping Process".format(str(datetime.datetime.now())),file=sys.stderr)
+print("{}: Started Reducer Process".format(str(datetime.datetime.now())),file=sys.stderr)
 
 for line in sys.stdin.buffer:
 	# A bit of a hack
@@ -95,5 +95,5 @@ stat_string = str(stats)
 print("{} ({})\t{}".format(current_location,current_year,stat_string))
 
 elapsed = time.time() - start
-print("{}: Mapping Process Ended".format(str(datetime.datetime.now())),file=sys.stderr)
-print("{}: Total time spent in Map {}".format(str(datetime.datetime.now()), elapsed),file=sys.stderr)
+print("{}: Reducer Process Ended".format(str(datetime.datetime.now())),file=sys.stderr)
+print("{}: Total time spent in Reduce {}".format(str(datetime.datetime.now()), elapsed),file=sys.stderr)
