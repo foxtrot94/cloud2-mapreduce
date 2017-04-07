@@ -5,7 +5,7 @@ import sys
 #The specific location being tracked
 TRACKED_LOCATION = "Winnipeg"
 #TRACKED_LOCATION = None
-
+print("It's happenning!!!",file=sys.stderr)
 for line in sys.stdin.buffer:
 	# A bit of a hack
 	clean_line = str(line)[2:].rstrip().lstrip()
